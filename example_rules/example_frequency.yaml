@@ -2,11 +2,11 @@
 
 # (Optional)
 # Elasticsearch host
-# es_host: elasticsearch.example.com
+es_host: localhost
 
 # (Optional)
 # Elasticsearch port
-# es_port: 14900
+es_port: 9200
 
 # (OptionaL) Connect with SSL to elasticsearch
 #use_ssl: True
@@ -26,16 +26,16 @@ type: frequency
 
 # (Required)
 # Index to search, wildcard supported
-index: logstash-*
+index: blog*
 
 # (Required, frequency specific)
 # Alert when this many documents matching the query occur within a timeframe
-num_events: 50
+num_events: 1
 
 # (Required, frequency specific)
 # num_events must occur within this amount of time to trigger an alert
 timeframe:
-  hours: 4
+  seconds: 10
 
 # (Required)
 # A list of elasticsearch filters used for find events
@@ -43,14 +43,11 @@ timeframe:
 # For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
 filter:
 - term:
-    some_field: "some_value"
+    user: dilbert
 
 # (Required)
 # The alert is use when a match is found
-alert:
-- "email"
+alert: "elastalert_modules.elastalert_slack.SlackAlerter"
+slack_webhook_url: "https://hooks.slack.com/services/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"
 
-# (required, email specific)
-# a list of email addresses to send alerts to
-email:
-- "elastalert@example.com"
+timestamp_field: postDate
